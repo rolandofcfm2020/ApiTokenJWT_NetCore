@@ -26,10 +26,10 @@ namespace ApiTokenJWT.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login([FromBody] UserModel userLogin)
+        public IActionResult Login([FromBody] UserModel myUserLogin)
         {
             IActionResult response = Unauthorized();
-            var user = AuthenticateUser(userLogin);
+            var user = AuthenticateUser(myUserLogin);
 
             if (user != null)
             {
@@ -47,7 +47,7 @@ namespace ApiTokenJWT.Controllers
             var permClaims = new List<Claim>();
             permClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
             permClaims.Add(new Claim("valid", "1"));
-            permClaims.Add(new Claim("userid", "1"));
+            permClaims.Add(new Claim("userid", userInfo.Username));
             permClaims.Add(new Claim("name", userInfo.EmailAddress));
 
 
